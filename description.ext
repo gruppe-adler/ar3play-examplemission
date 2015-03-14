@@ -1,0 +1,24 @@
+author = "Fusselwurm";
+overviewText = "Testmission";
+onLoadName = "fu!";
+enableDebugConsole = 2;
+OnLoadMission = "Buddelkasten zum testen";
+
+class Params
+{
+	class IsStreamable
+	{
+		title = "enable live stream"; 
+		values[] = {0,1}; 
+		texts[] = {"no","yes"}; 
+		default = 0; 
+		isGlobal = 0;
+	};
+};
+
+class Header
+{
+	gameType =  Unknown;
+	minPlayers = 1;
+	maxPlayers = 17;
+};
