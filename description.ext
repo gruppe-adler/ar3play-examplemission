@@ -6,14 +6,22 @@ OnLoadMission = "Buddelkasten zum testen";
 
 class Params
 {
-	class IsStreamable
-	{
-		title = "enable live stream";
-		values[] = {0,1};
-		texts[] = {"no","yes"};
-		default = 0;
-		isGlobal = 0;
-	};
+        class EnableReplay
+        {
+                title = "enable replay";
+                values[] = {0,1};
+                texts[] = {"no", "yes"};
+                default = 1;
+                isGlobal = 0;
+        }
+        class IsStreamable
+        {
+                title = "enable live stream (depends on replay)";
+                values[] = {0,1};
+                texts[] = {"no","yes"};
+                default = 0;
+                isGlobal = 0;
+        };
 };
 
 class Header

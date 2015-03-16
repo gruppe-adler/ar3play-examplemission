@@ -1,4 +1,6 @@
-IS_STREAMABLE = paramsArray select 0;
+ENABLE_REPLAY = paramsArray select 0;
+IS_STREAMABLE = paramsArray select 1;
+
 enableSaving [false, false];
 waitUntil {isDedicated || {not(isNull player)}};
 

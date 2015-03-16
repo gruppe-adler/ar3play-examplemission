@@ -1,9 +1,6 @@
-diag_log "foo startet";
 
 _logscript = compile preprocessFileLineNumbers "sock-rpc\log.sqf";
 call _logscript;
-
-diag_log "fu: log.sqf ist fertig";
 
 _sockscript = compile preprocessFileLineNumbers "sock-rpc\sock.sqf";
 call _sockscript;
@@ -29,8 +26,12 @@ if (isDedicated) then {
 
 	['missionStart', [missionName, worldName]] call sock_rpc;
 
+	if (IS_STREAMABLE == 1) then {
+		['setIsStreamable', [true]] call sock_rpc;
+	};
+
 	[] spawn {
-		while {count allUnits > 0} do {
+		while {(count allUnits > 0) and (ENABLE_REPLAY == 1)} do {
 			playersArray = [];
 			{
 				pos = (getPos _x) + [getDir _x];
