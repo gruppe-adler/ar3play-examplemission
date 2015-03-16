@@ -25,41 +25,100 @@ if (isDedicated) then {
 		['missionEnd', []] call sock_rpc;
 	}];
 
+	waitUntil { count allUnits > 0 };
+
 	['missionStart', [missionName, worldName]] call sock_rpc;
 
 	[] spawn {
 		while {count allUnits > 0} do {
+			playersArray = [];
 			{
-				['setPlayerPosition', [name _x, getPos _x]] call sock_rpc;
-			} forEach allUnits;
+				pos = (getPos _x) + [getDir _x];
 
-			sleep 1;
-		};
-	};
-
-	[] spawn {
-		while {count allUnits > 0} do {
-			{
-				['setPlayerSide', [name _x, format["%1", side _x]]] call sock_rpc;
-
-			} forEach allUnits;
-			sleep 100;
-		}
-	};
-
-	[] spawn {
-		while {count allUnits > 0} do {
-			{
 				status = 'unconscious';
 				if (alive _x) then {
 					status = 'alive';
 				} else {
 					status = 'dead';
 				};
-				['setPlayerStatus', [name _x, status]] call sock_rpc;
 
-			} forEach allUnits;
-			sleep 3;
+				vehicletype = 'unknown';
+				if (vehicle _x == _x) then {
+					vehicletype = 'none';
+				} else {
+					_veh = vehicle _x;
+					if (_veh isKindOf "Helicopter") then {
+						vehicletype = 'helicopter';
+					};
+				};
+
+				classtype = 'unknown';
+				if (
+					(_x isKindOf 'B_soldier_AR_F') or
+					(_x isKindOf 'I_soldier_AR_F') or
+					(_x isKindOf 'O_soldier_AR_F')
+				) then {
+					classtype = 'mg';
+				} else { if (
+					(_x isKindOf 'B_Soldier_SL_F') or
+					(_x isKindOf 'I_Soldier_SL_F') or
+					(_x isKindOf 'O_Soldier_SL_F')
+				) then {
+					classtype = 'officer';
+				} else { if (
+					(_x isKindOf 'B_soldier_TL_F') or
+					(_x isKindOf 'I_soldier_TL_F') or
+					(_x isKindOf 'O_soldier_TL_F')
+				) then {
+					classtype = 'leader';
+				} else { if (
+					(_x isKindOf 'B_Soldier_GL_F') or
+					(_x isKindOf 'I_Soldier_GL_F') or
+					(_x isKindOf 'O_Soldier_GL_F')
+				) then {
+					classtype = 'unknown';
+				} else { if (
+					(_x isKindOf 'B_soldier_LAT_F') or
+					(_x isKindOf 'I_soldier_LAT_F') or
+					(_x isKindOf 'O_soldier_LAT_F')
+				) then {
+					classtype = 'at';
+				} else { if (
+					(_x isKindOf 'B_soldier_AA_F') or
+					(_x isKindOf 'I_soldier_AA_F') or
+					(_x isKindOf 'O_soldier_AA_F')
+				) then {
+					classtype = 'at';
+				} else { if (
+					(_x isKindOf 'B_medic_F') or
+					(_x isKindOf 'I_medic_F') or
+					(_x isKindOf 'O_medic_F')
+				) then {
+					classtype = 'medic';
+				} else { if (
+					(_x isKindOf 'B_Soldier_repair_F') or
+					(_x isKindOf 'I_Soldier_repair_F') or
+					(_x isKindOf 'O_Soldier_repair_F')
+				) then {
+					classtype = 'engineer';
+				} else { if (
+					(_x isKindOf 'B_Soldier_exp_F') or
+					(_x isKindOf 'I_Soldier_exp_F') or
+					(_x isKindOf 'O_Soldier_exp_F')
+				) then {
+					classtype = 'explosive';
+				};};};};};};};};};
+
+				playerArray = [name _x, pos, [format ["%1", side _x], classtype], [status, vehicletype]];
+
+				playersArray = playersArray + [playerArray];
+
+			} forEach allUnits + allDead - vehicles - agents;
+
+			['setAllPlayerData', [playersArray]] call sock_rpc;
+			sleep 2;
 		}
 	};
 };
+
+
