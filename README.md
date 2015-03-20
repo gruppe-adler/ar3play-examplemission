@@ -1,9 +1,13 @@
-This is an example mission for ar3play.
+Arma3 mission replays.
 
-ar3play is a *web based* arma3 mission replay application.
+# Prerequisites
 
-It works by building on micovery's sock-rpc extension.
+* [`sock.dll` / `sock.so` Arma3 server extension](http://forums.bistudio.com/showthread.php?178327-Node-js-Extension-for-Arma-3-%28sock-sqf-sock-dll-sock-rpc%29)
+* [NodeJS](https://nodejs.org)/ (0.10 or so?)
+* [Redis](http://redis.io/)
 
- [micovery's code](https://bitbucket.org/micovery/sock-rpc.mission) is contained in vendor/sock-rpc directory.
+# Parts of the whole
 
-
+* [Server](https://github.com/gruppe-adler/ar3play-server) 
+* [example mission](https://github.com/gruppe-adler/ar3play-examplemission) (this repo)
+* [Webclient](https://github.com/gruppe-adler/ar3play-web)
