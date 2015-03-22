@@ -9,15 +9,15 @@ class Params
         class EnableReplay
         {
                 title = "enable replay";
-                values[] = {0,1};
+                values[] = {false, true};
                 texts[] = {"no", "yes"};
-                default = 1;
+                default = true;
                 isGlobal = 0;
-        }
+        };
         class IsStreamable
         {
-                title = "enable live stream (depends on replay)";
-                values[] = {0,1};
+                title = "enable live stream (needs 'enable replay')";
+                values[] = {false, true};
                 texts[] = {"no","yes"};
                 default = 0;
                 isGlobal = 0;

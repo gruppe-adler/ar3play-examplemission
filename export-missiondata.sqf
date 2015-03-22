@@ -5,7 +5,7 @@ call _logscript;
 _sockscript = compile preprocessFileLineNumbers "vendor\sock-rpc\sock.sqf";
 call _sockscript;
 
-diag_log "start pinging sock_rpc...";
+diag_log "export-missiondatat.sqf: ok. start pinging sock_rpc...";
 
 [] spawn {
 	while {true} do {
@@ -26,12 +26,12 @@ if (isDedicated) then {
 
 	['missionStart', [missionName, worldName]] call sock_rpc;
 
-	if (IS_STREAMABLE == 1) then {
+	if (IS_STREAMABLE) then {
 		['setIsStreamable', [true]] call sock_rpc;
 	};
 
 	[] spawn {
-		while {(count allUnits > 0) and (ENABLE_REPLAY == 1)} do {
+		while {(count allUnits > 0) and (ENABLE_REPLAY)} do {
 			playersArray = [];
 			{
 				pos = (getPos _x) + [getDir _x];
