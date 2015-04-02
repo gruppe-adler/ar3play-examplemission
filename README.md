@@ -1,3 +1,6 @@
+**NOTE: this code will not get updates, plz see https://github.com/gruppe-adler/ar3play-addon**
+
+
 Arma3 mission replays.
 
 # Prerequisites
